@@ -61,7 +61,7 @@ function NewUser() {
 
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">availbe something</span>
+              <span class="label-text">email</span>
               <span class="label-text-alt">Alt label</span>
             </label>
             <input
@@ -77,8 +77,7 @@ function NewUser() {
         
         </div>
         <button class="btn absolute bottom-1/4 max-w-xs">create Course</button>
-        
-
+ 
       </div>
       
     </div>
