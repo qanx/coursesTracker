@@ -1,5 +1,4 @@
 import React from "react";
-import GetAllUsers from "../components/Admin/GetAllUsers";
 import GetAllCourses from "../components/GetAllCourses";
 import Topbar from "../components/Topbar";
 import UserCoursesInfo from "../components/UserCoursesInfo";
@@ -10,7 +9,7 @@ function UserCoursesPage() {
     <div>
       <Topbar />
       <UserInfo/>
-      <GetAllUsers/>
+      <UserCoursesInfo/>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const morgan = require('morgan')
+const CourseRoute = require('./Routes/CourseRoute')
+const UserRoute = require('./Routes/UserRoute.js')
 require("dotenv").config()
-const faker =require("@faker-js/faker")
-const randomName =   faker.name.findName();
-console.log(randomName)
-//connect to database
+ 
+
+ //connect to database
 mongoose
   .connect(process.env.DB_URI, {
     useNewUrlParser: true,
@@ -13,6 +15,10 @@ mongoose
   })
   
   .then(() => console.log('mongoDB connected...')).catch(err=>console.log(err));
+app.use(express.json())
+app.use(morgan('tiny'))
+app.use("/api/Course",CourseRoute)
+app.use("/api/User",UserRoute)
 
 
 app.listen(3300,console.log("running"))
