@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <AdminMainPage/>
-      <BrowsesCoursesPage/>
+      {/* <BrowsesCoursesPage/> */}
       {/* <UserCoursesPage/> */}
       {/* <HomePage /> */}
       {/* <LoginPage/> */}
