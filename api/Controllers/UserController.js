@@ -27,10 +27,10 @@ const register = async (req, res) => {
                 console.log("user creation")
                 const salt = await bcrypt.genSalt(10);
                 // now we set user password to hashed password
-                 const hashedPassword = await bcrypt.hash(password, salt);
-                const user = new User({ username,password: hashedPassword, email, image })
-                
-            
+                const hashedPassword = await bcrypt.hash(password, salt);
+                const user = new User({ username, password: hashedPassword, email, image })
+
+
 
                 console.log("user datiles : " + user)
                 await user.save()
@@ -56,7 +56,7 @@ const signIn = async (req, res) => {
     }
     else {
 
-        const user = await User.findOne({ email}).populate("path")
+        const user = await User.findOne({ email }).populate("path")
         // poplute to show related courses
         // const userPath= await Path.findById(user.path._id).populate({path:'courses',model:Course})
         // console.log(userPath.courses)
@@ -69,7 +69,7 @@ const signIn = async (req, res) => {
             // console.log(user.Token)
             const { username, image, ...others } = user._doc
 
-            res.status(200).json({  username, image })
+            res.status(200).json({ username, image })
 
 
         }
@@ -81,6 +81,30 @@ const signIn = async (req, res) => {
     }
 }
 
+const GetUserInfo = async (req, res) => {
 
 
-module.exports = { register, signIn }
+    try {
+        const user = await User.findById(req.params.id).populate("path").populate("completedCourses")
+        const { password, updatedAt, ...others } = user._doc
+
+        res.status(200).json(others)
+    } catch (error) {
+        res.status(500).json("user not found")
+
+    }
+}
+
+const GetAllusers = async (req, res) => {
+    try {
+    const users =await User.find().populate("path")
+    
+    res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json("users not found")
+
+    }
+}
+
+
+module.exports = { register, signIn, GetUserInfo ,GetAllusers}

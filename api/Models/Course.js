@@ -26,7 +26,8 @@ const CourseSchema = new mongoose.Schema({
     path :{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Path'
-    }
+    },
+   
 
 
 }, {timestamps: true})

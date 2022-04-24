@@ -6,6 +6,8 @@ var UserSchema = new mongoose.Schema({
   email: {type:String,required:true,unique:true},
   password:{type: String,required:true},
   bio: String,
+  job:String,
+  country:String,
   image: {type:String,default:"https://www.w3schools.com/w3images/avatar5.png"},
   path:{
       type: mongoose.Schema.Types.ObjectId,

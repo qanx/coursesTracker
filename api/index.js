@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const CourseRoute = require('./Routes/CourseRoute')
-const UserRoute = require('./Routes/UserRoute.js')
+const UserRoute = require('./Routes/UserRoute')
 require("dotenv").config()
  
 

@@ -1,54 +1,75 @@
-const { findById } = require('../Models/PathCourse')
-const Path= require('../Models/PathCourse')
+ 
+const Path = require('../Models/PathCourse')
 const Course = require('../Models/Course')
-const CraetePath = async(req,res)=>{
+const CraetePath = async (req, res) => {
 
     console.log(req.body.pathTitle)
-    const newPath = new Path({pathTitle:req.body.pathTitle})
+    const newPath = new Path({ pathTitle: req.body.pathTitle })
 
     try {
         await newPath.save()
-            res.status(201).json(newPath)
-        } catch (error) {
-            res.status(500).json(error)
-            
-        }
+        res.status(201).json(newPath)
+    } catch (error) {
+        res.status(500).json(error)
+
+    }
 }
 
-const AddCourseToPath = async (req,res)=>{
+const AddCourseToPath = async (req, res) => {
 
-    const {courseId,pathId}=req.body
-    
+    const { courseId, pathId } = req.body
+
     try {
-     const courseIdtoAddit= await Course.findById(courseId)
-        if(courseIdtoAddit){
+        const courseIdtoAddit = await Course.findById(courseId)
+        if (courseIdtoAddit) {
 
             try {
                 const pathToAddTo = await Path.findByIdAndUpdate
 
-                (pathId,{$addToSet:{courses:courseIdtoAddit._id}},{new:true})
+                    (pathId, { $addToSet: { courses: courseIdtoAddit._id } }, { new: true })
                 res.status(200).json(pathToAddTo)
             } catch (error) {
-        res.status(500).json(error)
-                
+                res.status(500).json(error)
+
             }
-           
+
 
         }
-        else{
+        else {
             res.status(500).json("course not found")
 
         }
     } catch (error) {
         res.status(500).json(error)
-        
+
     }
-        
+
     // const pathToAddTo = await Path.findById(pathId)
 
-    
+
     // res.json(courseIdtoAddit)
 
+ 
+ 
 
+
+ 
 }
-module.exports = {CraetePath,AddCourseToPath}
+
+
+const GetAllPathCoursess =async (req,res)=>{
+
+    console.log("first")
+    try {
+      const allPathCourses = await  Path.findById(req.params.id).populate('courses')
+    console.log(allPathCourses)
+      res.status(200).json(allPathCourses)
+    } catch (error) {
+        
+      res.status(500).json(error)
+    }
+      
+      
+     
+  }
+module.exports = { CraetePath, GetAllPathCoursess,AddCourseToPath  }

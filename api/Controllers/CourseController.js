@@ -10,17 +10,14 @@ const GetPathCourses=async (req,res)=>{
         // poplute to show related courses
             //   poplute to show related courses
         const userPath= await Path.findById(user.path._id).populate('courses')
-        console.log(userPath)
+        // console.log(userPath)
         // console.log(user)
         // console.log(user)
-        res.status(200).json(userPath.courses)
+        res.status(200).json({courses:userPath.courses,path:userPath.pathTitle})
     } catch (error) {
-        res.status(500).json(error)
-        
+        res.status(500).json(error)        
     }
-  
 }
-
 //get completed courses
 const GetCompletedCourses=async (req,res)=>{
 console.log(req.params)
@@ -38,7 +35,7 @@ console.log(req.params)
         res.status(500).json(error)
         
     }
-  
+ 
 }
 
 
@@ -52,8 +49,6 @@ const NewCourse = async(req,res)=>{
         res.status(500).json(error)
         
     }
-
-
 }
 
 //const add new course to user  , Mostly admin

@@ -14,11 +14,19 @@ import AdminMainPage from './pages/AdminMainPage';
 import BrowsesCoursesPage from './pages/BrowsesCoursesPage';
 import HomePage from './pages/HomePage';
 import UserCoursesPage from './pages/UserCoursesPage';
-
+import { Routes, Route, Link } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <AdminMainPage/>
+
+        <Routes>
+        <Route path="/" element={ <HomePage />} />
+        <Route path="/courses" element={<BrowsesCoursesPage/>} />
+        <Route path="/userpage" element={<UserCoursesPage/>} />
+        <Route path="/login" element={ <LoginPage/>} />
+        <Route path="/admin" element={ <AdminMainPage/> } />
+      </Routes>
+      {/* <AdminMainPage/> */}
       {/* <BrowsesCoursesPage/> */}
       {/* <UserCoursesPage/> */}
       {/* <HomePage /> */}
