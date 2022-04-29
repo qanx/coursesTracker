@@ -1,6 +1,19 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 
 function CourseCard({path,title,desc,duration,img,id}) {
+
+
+
+const  DeleteCourse = async(e)=>{
+
+  e.preventDefault()
+  const res =await axios.delete(`/api/Course/${id}`)
+  console.log(res.data);
+
+}
+
+
   return (
     <div className="p-4 md:w-1/3">
       <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
@@ -20,6 +33,7 @@ function CourseCard({path,title,desc,duration,img,id}) {
           <p className="leading-relaxed mb-3">
             Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
             microdosing tousled waistcoat. not
+
           </p>
           }
             
@@ -29,7 +43,12 @@ function CourseCard({path,title,desc,duration,img,id}) {
             <label htmlFor="my-modal-6" className="btn modal-button">
               Book now
             </label>
-            <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+
+            <button onClick={(e)=>DeleteCourse(e)} > delete</button>
+            <label htmlFor="my-modal-6" className="btn modal-button">
+              Delete
+            </label>
+            {/* <input type="checkbox" id="my-modal-6" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box">
                 <h3 className="font-bold text-lg">Sorry!</h3>
@@ -41,10 +60,11 @@ function CourseCard({path,title,desc,duration,img,id}) {
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
           
           </div>
           <div  className="flex justify-end" >
+           <span>{id}</span>
 
           <h6> duration :  {duration}</h6>
           </div>

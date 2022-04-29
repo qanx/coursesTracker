@@ -2,7 +2,9 @@ const Course = require('../Models/Course.js')
 const User=require('../Models/User')
 const Path = require("../Models/PathCourse");
 
-//get required courses
+
+
+//get  courses all courses in this path
 const GetPathCourses=async (req,res)=>{
 
     try {
@@ -39,14 +41,37 @@ console.log(req.params)
 }
 
 
-const NewCourse = async(req,res)=>{
 
+// get all paths courses
+
+const GetPAllathsCourses=async (req,res)=>{
+
+    console.log("first")
+    try {
+
+            //   poplute to show related courses
+        const allPathCourses= await Path.find().populate('courses')
+        console.log(allPathCourses)
+        // console.log(user)
+        // console.log(user)
+        res.status(200).json(allPathCourses)
+    } catch (error) {
+        res.status(500).json(error)        
+    }
+}
+
+
+const NewCourse = async(req,res)=>{
+    console.log(req.body)
     const newCourse = new Course(req.body)
     try {
-    await newCourse.save()
-        res.status(201).json(newCourse)
+        console.log(newCourse)
+
+        await newCourse.save()
+         pathToAddTo = await Path.findByIdAndUpdate(req.body.path,{ $addToSet: { courses: newCourse._id } }, { new: true })
+         res.status(201).json(newCourse)
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error.response)
         
     }
 }
@@ -59,7 +84,6 @@ const addCompletedCourse=async(req,res)=>{
         const completedCourse=req.body.completedCourse
         user.completedCourses.push(completedCourse)
         await user.save()
-        res.status(201).json(user)
     } catch (error) {
         res.status(500).json(error)
     }
@@ -67,5 +91,20 @@ const addCompletedCourse=async(req,res)=>{
 }
 
 
+const DeleteCourse = async (req,res)=>{
 
-module.exports = {GetPathCourses,NewCourse,addCompletedCourse,GetCompletedCourses}
+    console.log(req.body)
+
+    try {
+    const CourseToBeDeleted= await Course.findByIdAndRemove(req.params.id)
+    res.status(200).json(CourseToBeDeleted)
+
+    } catch (error) {
+        res.status(500).json(error)
+        
+    }
+
+
+}
+
+module.exports = {DeleteCourse,GetPathCourses,NewCourse,addCompletedCourse,GetCompletedCourses,GetPAllathsCourses}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AdminInfo from '../components/Admin/AdminInfo'
+import GetAllCoursesAdmin from '../components/Admin/GetAllCoursesAdmin'
 import GetAllUsers from '../components/Admin/GetAllUsers'
 import NewCourses from '../components/Admin/NewCourses'
 import NewUser from '../components/Admin/NewUser'
@@ -16,7 +17,7 @@ const [first, setfirst] = useState()
         
       <button class="btn btn-active" onClick={()=>setfirst(<NewCourses/>)}>create new courses </button>
       <button class="ml-3 btn btn-active" onClick={()=>setfirst(<NewUser/>)}>create new user </button>
-      <button class="ml-3 btn btn-active" onClick={()=>setfirst(<GetAllCourses/>)}>courses</button>
+      <button class="ml-3 btn btn-active" onClick={()=>setfirst(<GetAllCoursesAdmin/>)}>courses</button>
       <button class="ml-3 btn btn-active" onClick={()=>setfirst(<GetAllUsers/>)}>users</button>
       {first}
 

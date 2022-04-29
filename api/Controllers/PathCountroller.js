@@ -56,13 +56,28 @@ const AddCourseToPath = async (req, res) => {
  
 }
 
+const GetAllPaths =async (req,res)=>{
+
+ console.log("allpath")
+    try {
+      const allPath  = await  Path.find()
+    // console.log(allPath)
+      res.status(200).json(allPath)
+    } catch (error) {
+        
+      res.status(500).json(error)
+    }
+      
+      
+     
+  }
 
 const GetAllPathCoursess =async (req,res)=>{
 
-    console.log("first")
+     
     try {
       const allPathCourses = await  Path.findById(req.params.id).populate('courses')
-    console.log(allPathCourses)
+    // console.log(allPathCourses)
       res.status(200).json(allPathCourses)
     } catch (error) {
         
@@ -72,4 +87,4 @@ const GetAllPathCoursess =async (req,res)=>{
       
      
   }
-module.exports = { CraetePath, GetAllPathCoursess,AddCourseToPath  }
+module.exports = { CraetePath, GetAllPathCoursess,AddCourseToPath,GetAllPaths }
