@@ -80,12 +80,18 @@ const NewCourse = async(req,res)=>{
 const addCompletedCourse=async(req,res)=>{
 
     try {
-        const user = await User.findById(req.body.userId)
-        const completedCourse=req.body.completedCourse
-        user.completedCourses.push(completedCourse)
-        await user.save()
+        // const completedCoursereq=req.body.completedCoursereq
+        // console.log(completedCoursereq)
+        const user = await User.findByIdAndUpdate(req.body.userId,{$addToSet:{completedCourses:(req.body.completedCoursereq)} },{ new: true })
+        console.log(user)
+        // user({$addToSet:{completedCourse:completedCourse} })
+        // user.completedCourses.push(completedCourse)
+        // await user.save()
+        res.status(201).json("done")
+
     } catch (error) {
         res.status(500).json(error)
+        console.log(error)
     }
    
 }

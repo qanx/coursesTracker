@@ -1,19 +1,45 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import axios from 'axios'
+import { AuthContext } from '../Context/Context'
+import { useNavigate } from "react-router-dom";
+
 function LoginPage() {
   
+  const {dispatch,isFetching ,user,error}= useContext(AuthContext)
+  // const [error,setError]=useState(false)
   const emailRef=useRef()
   const passRef=useRef()
-    
-  const handleLogin=async()=>{
+  const navigate = useNavigate();
 
-    const res = await axios.post("/api/user/login",{email:emailRef.current.value,password:passRef.current.value}).then(res=>console.log(res.data)).catch(err=>console.log(err))
-    console.log(res);
-    
-    console.log(emailRef.current.value);
-    console.log(passRef.current.value);
-  }
   
+  const handleLogin=async(e)=>{
+    
+    e.preventDefault();
+    dispatch({ type: "LOGIN_START" });
+
+ 
+
+ await axios.post("/api/user/login",{email:emailRef.current.value,password:passRef.current.value}).then(response=>{
+        console.log(response)// this is response from server, including all ok and error responses 
+        
+        dispatch({type:"LOGIN_SUCCESS" ,payload:response.data})
+        localStorage.setItem("user",JSON.stringify(user))
+
+         navigate("/")
+
+    }).catch((error)=>{
+      console.log(error.response.data);
+      dispatch({type:"LOGIN_FAILURE" ,payload:error.response.data})
+      console.log("notok");
+      // setError(true)
+    })
+
+   console.log(isFetching);
+    
+
+  
+ 
+}
   return (
 <> <div className="bg-slate-400 flex items-center h-screen justify-center">
 <section class="shadow-xl h-3/4 w-3/4 bg-white border-0 border-cyan-200">
@@ -78,8 +104,9 @@ function LoginPage() {
           </div>
 
           <div class="text-center lg:text-left">
+            <span> </span>
             <button
-            onClick={()=>handleLogin()}
+            onClick={(e)=>handleLogin(e)}
               type="button"
               class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
             >

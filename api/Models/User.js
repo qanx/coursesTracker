@@ -7,6 +7,7 @@ var UserSchema = new mongoose.Schema({
   password:{type: String,required:true},
   bio: String,
   job:String,
+  isAdmin: {type:Boolean,default:false},
   country:String,
   image: {type:String,default:"https://www.w3schools.com/w3images/avatar5.png"},
   path:{

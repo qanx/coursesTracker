@@ -24,8 +24,7 @@ function GetAllCoursesAdmin() {
       // try {
       //   let arr = [];
       //   const res = await axios.get("/api/Course/pathsCourses");
-
-        
+ 
       //   await setallPathsCourses(res.data);
       //   //  await console.log(allPathsCourses);
 
@@ -55,7 +54,7 @@ function GetAllCoursesAdmin() {
 
   //   )
   // }
-  return (
+  return ( 
     <section class="text-gray-600 body-font">
       <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-4">
@@ -72,7 +71,6 @@ function GetAllCoursesAdmin() {
                   duration={c.duration}
                   id={c._id}
                 />
-              
             )}
         </div>
       </div>

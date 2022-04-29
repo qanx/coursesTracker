@@ -1,12 +1,13 @@
 const experss =require('express')
 const { GetPathCourses, NewCourse, addCompletedCourse,GetCompletedCourses, GetPAllathsCourses, DeleteCourse } = require('../Controllers/CourseController')
 const { CraetePath, AddCourseToPath, GetAllPathCoursess, GetAllPaths } = require('../Controllers/PathCountroller')
+const { verfiyTokenIsAdmin } = require('../Controllers/UserController')
 const router = experss.Router()
 
 //get all path only
 router.route('/pathsCourses').get(GetPAllathsCourses)
 router.route('/paths').get(GetAllPaths)
-router.route('/').post(NewCourse)
+router.route('/').post(verfiyTokenIsAdmin,NewCourse)
 //All courses based on Path " params  "id""
 router.route('/pathcourses/:id').get(GetAllPathCoursess)
 

@@ -15,16 +15,21 @@ import BrowsesCoursesPage from './pages/BrowsesCoursesPage';
 import HomePage from './pages/HomePage';
 import UserCoursesPage from './pages/UserCoursesPage';
 import { Routes, Route, Link } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from './Context/Context';
 function App() {
+
+  const {user}=useContext(AuthContext)
   return (
+    
     <div className="App">
 
         <Routes>
         <Route path="/" element={ <HomePage />} />
         <Route path="/courses" element={<BrowsesCoursesPage/>} />
-        <Route path="/userpage" element={<UserCoursesPage/>} />
+        <Route path="/userpage"  element={ user ? <UserCoursesPage/>:  <HomePage />}   />
         <Route path="/login" element={ <LoginPage/>} />
-        <Route path="/admin" element={ <AdminMainPage/> } />
+        <Route path="/admin" element={user?.isAdmin? <AdminMainPage/> : <HomePage /> } />
       </Routes>
       {/* <AdminMainPage/> */}
       {/* <BrowsesCoursesPage/> */}

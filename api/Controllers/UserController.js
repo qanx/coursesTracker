@@ -2,6 +2,8 @@ const User = require('../Models/User')
 const bcrypt = require("bcrypt");
 const Path = require("../Models/PathCourse");
 const Course = require('../Models/Course');
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = "secret"
 // const Course = require("../Models/Course")
 // const mongoose = require("mongoose")
 
@@ -67,9 +69,10 @@ const signIn = async (req, res) => {
 
 
             // console.log(user.Token)
-            const { username, image, ...others } = user._doc
-
-            res.status(200).json({ username, image })
+            const {_id,isAdmin, username, image, ...others } = user._doc
+            const newToken = jwt.sign({ isAdmin, id: user._id, username: user.username }, JWT_SECRET)
+            console.log(newToken)
+            res.status(200).json({ _id, username, image, newToken,isAdmin })
 
 
         }
@@ -97,14 +100,55 @@ const GetUserInfo = async (req, res) => {
 
 const GetAllusers = async (req, res) => {
     try {
-    const users =await User.find().populate("path")
-    
-    res.status(200).json(users)
+        const users = await User.find().populate("path")
+
+        res.status(200).json(users)
     } catch (error) {
         res.status(500).json("users not found")
 
     }
 }
 
+const verfiyToken = async (req, res, next) => {
+    const headers = req.headers['authorization']
 
-module.exports = { register, signIn, GetUserInfo ,GetAllusers}
+    if (headers) {
+        const token = headers.split(" ")[1]
+        const ver = jwt.verify(token, JWT_SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+
+            req.user = user;
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+        
+    }
+}
+
+const verfiyTokenIsAdmin = async (req, res, next) => {
+    const headers = req.headers['authorization']
+
+    if (headers) {
+        const token = headers.split(" ")[1]
+        const ver = jwt.verify(token, JWT_SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            req.user = user;
+            console.log(req.user)
+            if (!req.user.isAdmin)return res.status(401).send({ msg: "Not an admin, sorry" });
+
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+        
+    }
+}
+
+
+
+module.exports = {verfiyTokenIsAdmin, verfiyToken, register, signIn, GetUserInfo, GetAllusers }

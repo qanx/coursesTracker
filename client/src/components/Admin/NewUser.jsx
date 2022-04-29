@@ -1,6 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 
 function NewUser() {
+
+  const [paths,setPaths]=useState()
+  const usernameRef     =useRef()
+  const emailRef =useRef()
+  const passwordRef      =useRef()
+  let jobRef      =useRef()
+
+ 
+  // useEffect(() => {
+  //   const getPaths= async()=>{
+
+  //   const res = await axios.get("/api/Course/paths")
+  //   setPaths(res.data)
+  //   console.log(res.data);
+  //   }
+
+  //   getPaths()
+  // }, [])
+  
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+
+    try {
+      const res = await axios.post("/api/user",{
+        username: usernameRef.current.value,   
+        email: emailRef.current.value,
+        password: passwordRef.current.value,    
+        job: jobRef.current.value   })
+
+        console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+    
+
+
+  }
   return (
     <div className="h-screen w-screen bg-slate-400 flex justify-center items-center">
       <div className="flex relative h-3/4 w-10/12 bg-zinc-700 justify-center items-center">
@@ -8,7 +46,7 @@ function NewUser() {
           <h1 className="absolute top-10 text-4xl">add new course:</h1>
         <div className="h-full w-full flex flex-col justify-center items-center">
           <div class="form-control w-full max-w-xs ">
-            <label class="label">
+            <label  class="label">
               <span class="label-text">User name</span>
         
             </label>
@@ -16,6 +54,7 @@ function NewUser() {
               type="text"
               placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
+              ref={usernameRef}
             />
             <label class="label">
               <span class="label-text-alt"></span>
@@ -29,6 +68,8 @@ function NewUser() {
               <span class="label-text-alt">Alt label</span>
             </label>
             <input
+            ref={passwordRef}
+
               type="text"
               placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
@@ -42,14 +83,16 @@ function NewUser() {
         </div>
         
 
-        <div className="h-full w-full flex flex-col justify-center items-cente ">
+        <div  className="h-full w-full flex flex-col justify-center items-cente ">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">type</span>
+              <span class="label-text">job </span>
               <span class="label-text-alt">Alt label</span>
             </label>
             <input
               type="text"
+            ref={jobRef}
+
               placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
             />
@@ -65,6 +108,8 @@ function NewUser() {
               <span class="label-text-alt">Alt label</span>
             </label>
             <input
+              ref={emailRef}
+
               type="text"
               placeholder="Type here"
               class="input input-bordered w-full max-w-xs"
@@ -76,7 +121,7 @@ function NewUser() {
           </div>
         
         </div>
-        <button class="btn absolute bottom-1/4 max-w-xs">create Course</button>
+        <button onClick={handleSubmit} class="btn absolute bottom-1/4 max-w-xs">create User</button>
  
       </div>
       
