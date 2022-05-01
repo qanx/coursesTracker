@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Context/Context";
 import CourseCard from "../CourseCard";
 
 function GetAllCoursesAdmin() {
   const [allPathsCourses, setallPathsCourses] = useState([]);
   const [allcourses,setAllcourses ]=useState([]);
+  const{user}= useContext(AuthContext)
   // const [path,setPath]=useState("")
   useEffect(() => {
     const getAllPathCourses = async () => {
@@ -18,7 +20,7 @@ function GetAllCoursesAdmin() {
           }
           const arrFlat = arr.flat()
           console.log(arr);
-          console.log(arrFlat);
+          // console.log("token +"+user.newToken);
            setallPathsCourses((prevState) => [...prevState,...arrFlat])
           console.log(allPathsCourses);
       // try {
@@ -63,6 +65,8 @@ function GetAllCoursesAdmin() {
             allPathsCourses?.map((c) =>
               
                 <CourseCard
+                newToken={user.newToken}
+                isAdmin={user.isAdmin}
                   desc={c.desc}
                   key={c._id}
                   // path={c.pathTitle}

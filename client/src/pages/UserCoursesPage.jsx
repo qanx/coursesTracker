@@ -28,6 +28,7 @@ function UserCoursesPage() {
   },[ ])
   return (
     <div>
+      
       <Topbar />
       {completedCourses[0]?.title}
      {userInfo? <UserInfo username={userInfo.username}  image={userInfo?.image} completedCourses={userInfo.completedCourses} path={userInfo.path?.pathTitle}  job={userInfo.job} requiredCourses={userInfo.path?.courses} />:<UserInfo />}

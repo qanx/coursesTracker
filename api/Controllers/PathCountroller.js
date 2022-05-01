@@ -79,6 +79,7 @@ const GetAllPathCoursess =async (req,res)=>{
       const allPathCourses = await  Path.findById(req.params.id).populate('courses')
     // console.log(allPathCourses)
       res.status(200).json(allPathCourses)
+      console.log(allPathCourses)
     } catch (error) {
         
       res.status(500).json(error)

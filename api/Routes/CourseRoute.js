@@ -12,7 +12,7 @@ router.route('/').post(verfiyTokenIsAdmin,NewCourse)
 router.route('/pathcourses/:id').get(GetAllPathCoursess)
 
 //below For user Path
-router.route('/:id').get(GetPathCourses).delete(DeleteCourse)
+router.route('/:id').get(GetPathCourses).delete(verfiyTokenIsAdmin,DeleteCourse)
 router.route('/usercompleted/:id').get(GetCompletedCourses)
 // router.route('/')
 router.route('/path').post(CraetePath).put(AddCourseToPath)

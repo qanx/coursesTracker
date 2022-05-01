@@ -1,6 +1,6 @@
 
 const mongoose = require("mongoose")
-
+const Path=require("./PathCourse")
 const CourseSchema = new mongoose.Schema({
 
     title:{
@@ -32,4 +32,7 @@ const CourseSchema = new mongoose.Schema({
 
 }, {timestamps: true})
 
+// CourseSchema.post(doc){
+// Path.remove({_id:doc.})
+// }
 module.exports = mongoose.model("Course",CourseSchema)

@@ -1,14 +1,21 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 
-function CourseCard({path,title,desc,duration,img,id}) {
+function CourseCard({path,title,desc,duration,img,id ,isAdmin,newToken}) {
 
 
-
+console.log(isAdmin);
 const  DeleteCourse = async(e)=>{
 
+  console.log(newToken);
   e.preventDefault()
-  const res =await axios.delete(`/api/Course/${id}`)
+  const res =await axios.delete(`/api/Course/${id}`,
+  {
+    headers: {
+      'Authorization': `Basic ${newToken}` 
+    }}
+  
+  )
   console.log(res.data);
 
 }
@@ -29,10 +36,11 @@ const  DeleteCourse = async(e)=>{
           <h1 className="title-font text-lg font-medium text-gray-600 mb-3">
             {title}
           </h1>
-{   desc ? <p className="leading-relaxed mb-3">{desc}</p> :
+{   desc ? <p className="leading-relaxed mb-3">{desc} </p> :
           <p className="leading-relaxed mb-3">
             Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
-            microdosing tousled waistcoat. not
+            microdosing tousled waistcoat. not 
+           
 
           </p>
           }
@@ -44,10 +52,9 @@ const  DeleteCourse = async(e)=>{
               Book now
             </label>
 
-            <button onClick={(e)=>DeleteCourse(e)} > delete</button>
-            <label htmlFor="my-modal-6" className="btn modal-button">
-              Delete
-            </label>
+          { isAdmin ?  <label onClick={(e)=>DeleteCourse(e)} htmlFor="my-modal-6" className="ml-2 btn modal-button">      Delete
+            </label>: null}
+         
             {/* <input type="checkbox" id="my-modal-6" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box">

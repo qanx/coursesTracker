@@ -99,10 +99,14 @@ const addCompletedCourse=async(req,res)=>{
 
 const DeleteCourse = async (req,res)=>{
 
-    console.log(req.body)
+    // console.log(req)
 
     try {
     const CourseToBeDeleted= await Course.findByIdAndRemove(req.params.id)
+    console.log(CourseToBeDeleted.path)
+    console.log(CourseToBeDeleted)
+   const removedfromPath= await Path.findByIdAndUpdate(CourseToBeDeleted.path,{$pull:{courses : req.params.id }})
+            console.log(removedfromPath)
     res.status(200).json(CourseToBeDeleted)
 
     } catch (error) {

@@ -1,7 +1,7 @@
 const experss =require('express')
 const router = experss.Router()
 
-const { register, signIn, GetUserInfo, GetAllusers, verfiyToken } = require('../Controllers/UserController')
+const { register, signIn, GetUserInfo, GetAllusers, verfiyToken, editUser, verfiyTokenIsAdmin } = require('../Controllers/UserController')
  
 router.route("/userToken").get(verfiyToken,(req,res)=>{
     try {
@@ -11,8 +11,7 @@ router.route("/userToken").get(verfiyToken,(req,res)=>{
     }
   })
 router.route('/all').get(GetAllusers)
-
-router.route("/:id").get(verfiyToken,GetUserInfo)
+router.route("/:id").get(verfiyToken,GetUserInfo).put(verfiyTokenIsAdmin,editUser)
 router.route("/login").post(signIn)
 router.route("/").post(register)
 module.exports = router

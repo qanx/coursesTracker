@@ -22,14 +22,16 @@ function Topbar() {
             
             {/* <a></a> */}
             </li>
+         
+            <li>
+          <Link to='/courses'> courses</Link>
+            </li>
           <li>
             {user ? <a onClick={()=>{dispatch({type:"LOGOUT_SUCCESS"})}}>Log Out</a>:null }
             
             
             </li>
-            <li>
-          <Link to='/courses'> courses</Link>
-            </li>
+         
           
         </ul>
       </div>

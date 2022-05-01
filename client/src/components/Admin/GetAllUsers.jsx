@@ -29,7 +29,7 @@ function GetAllUsers() {
   return (
     <div className="flex flex-row  w-screen   justify-center items-center ">
       <div className="flex flex-row w-10/12 flex-wrap  justify-center items-center ">
-      {users? (users?.map(u=> <UserCard path={u?.path?.pathTitle} country={u?.country} job={u?.job} username={u?.username} key={u?._id} email={u?.email}/>)) :<h1>wait </h1>}
+      {users? (users?.map(u=> <UserCard path={u?.path?.pathTitle} country={u?.country} job={u?.job} username={u?.username} id={u?._id}  key={u?._id} email={u?.email}/>)) :<h1>wait </h1>}
         {/* <UserCard /> */}
         {/* //  <UserCard username={u?.username} key={u?._id} email={u?.email}/>}) */}
         {/**/}

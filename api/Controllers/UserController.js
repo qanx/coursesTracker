@@ -69,10 +69,10 @@ const signIn = async (req, res) => {
 
 
             // console.log(user.Token)
-            const {_id,isAdmin, username, image, ...others } = user._doc
+            const {path, _id,isAdmin, username, image, ...others } = user._doc
             const newToken = jwt.sign({ isAdmin, id: user._id, username: user.username }, JWT_SECRET)
             console.log(newToken)
-            res.status(200).json({ _id, username, image, newToken,isAdmin })
+            res.status(200).json({path, _id, username, image, newToken,isAdmin })
 
 
         }
@@ -109,6 +109,23 @@ const GetAllusers = async (req, res) => {
     }
 }
 
+
+
+const editUser= async (req,res)=>{
+
+    try {
+        console.log(req.body)
+        const users = await User.findOneAndUpdate(req.body._id,req.body)
+        
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json("users not found")
+
+    }
+}
+
+//Tokens 
+
 const verfiyToken = async (req, res, next) => {
     const headers = req.headers['authorization']
 
@@ -130,6 +147,7 @@ const verfiyToken = async (req, res, next) => {
 
 const verfiyTokenIsAdmin = async (req, res, next) => {
     const headers = req.headers['authorization']
+    console.log(headers)
 
     if (headers) {
         const token = headers.split(" ")[1]
@@ -151,4 +169,4 @@ const verfiyTokenIsAdmin = async (req, res, next) => {
 
 
 
-module.exports = {verfiyTokenIsAdmin, verfiyToken, register, signIn, GetUserInfo, GetAllusers }
+module.exports = {editUser,verfiyTokenIsAdmin, verfiyToken, register, signIn, GetUserInfo, GetAllusers }

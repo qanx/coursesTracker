@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../Context/Context";
 
 function NewCourses() {
 
+  const {user}=useContext(AuthContext)
   const [paths,setPaths]=useState()
   const titleRef     =useRef()
   const durationRef =useRef()
@@ -28,7 +30,15 @@ function NewCourses() {
       const res = await axios.post("/api/Course/",{title: titleRef.current.value,   
         duration: durationRef.current.value,
         desc: descRef.current.value,    
-        path: pathRef   })
+        path: pathRef   },
+        
+        
+        {
+          headers: {
+            'Authorization': `Basic ${user.newToken}`
+          },
+        }
+        )
 
         console.log(res.data);
     } catch (error) {

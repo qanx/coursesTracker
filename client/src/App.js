@@ -31,6 +31,7 @@ function App() {
         <Route path="/login" element={ <LoginPage/>} />
         <Route path="/admin" element={user?.isAdmin? <AdminMainPage/> : <HomePage /> } />
       </Routes>
+      
       {/* <AdminMainPage/> */}
       {/* <BrowsesCoursesPage/> */}
       {/* <UserCoursesPage/> */}
