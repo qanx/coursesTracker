@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const CourseRoute = require('./Routes/CourseRoute')
 const UserRoute = require('./Routes/UserRoute')
+const BookingRoute=require('./Routes/BookingRoute')
 require("dotenv").config()
  
 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(morgan('tiny'))
 app.use("/api/Course",CourseRoute)
 app.use("/api/User",UserRoute)
+app.use("/api/Booking",BookingRoute)
 
 
 app.listen(3300,console.log("running"))

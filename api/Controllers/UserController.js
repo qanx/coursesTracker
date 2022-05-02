@@ -88,7 +88,7 @@ const GetUserInfo = async (req, res) => {
 
 
     try {
-        const user = await User.findById(req.params.id).populate("path").populate("completedCourses")
+        const user = await User.findById(req.params.id).populate("path").populate("completedCourses").populate({path:"path",populate:{ path:"courses"}})
         const { password, updatedAt, ...others } = user._doc
 
         res.status(200).json(others)

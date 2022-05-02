@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import Modal from "./Modal";
 
 function CourseCard({path,title,desc,duration,img,id ,isAdmin,newToken}) {
 
@@ -54,7 +55,8 @@ const  DeleteCourse = async(e)=>{
 
           { isAdmin ?  <label onClick={(e)=>DeleteCourse(e)} htmlFor="my-modal-6" className="ml-2 btn modal-button">      Delete
             </label>: null}
-         
+          
+            <Modal id={id}/>
             {/* <input type="checkbox" id="my-modal-6" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
               <div className="modal-box">
@@ -68,7 +70,6 @@ const  DeleteCourse = async(e)=>{
                 </div>
               </div>
             </div> */}
-          
           </div>
           <div  className="flex justify-end" >
            <span>{id}</span>
